@@ -4,24 +4,34 @@ import copy
 def all_in_one():
     
     data = [
-        [8, 8, 4],
-        [1, 4, 6],
-        [9, 5, 1],
+        [6, 8, 8],
+        [2, 8, 8],
+        [5, 5, 5],
     ]
 
     origin_data = copy.deepcopy(data)
     # 按键记录器
     recorder = []
-
-    step_one(data, recorder)
-    step_two(data, recorder)
-    step_three(data, recorder)
-    step_four(data, recorder)
-    
     print('==========原始数据==========')
     for row in origin_data:
         print('{}\t{}\t{}'.format(*row))
     print('\n')
+
+
+    # 方案1
+    # step_one(data, recorder)
+    # step_two(data, recorder)
+    # step_three(data, recorder)
+    # step_four(data, recorder)
+    
+    # 方案2
+    step_one_v2(data, recorder)
+    print('==========执行完步骤1_v2的结果==========')
+    for row in data:
+        print('{}\t{}\t{}'.format(*row))
+    step_two_v2(data, recorder)
+    
+    
     print('==========最终数据==========')
     for row in data:
         print('{}\t{}\t{}'.format(*row))
@@ -263,6 +273,62 @@ def step_four(data, recorder):
     #         if data[1][1] == data[0][1] and data[1][1] == data[1][0] \
     #                 and data[1][1] == data[1][2] and data[1][1] == data[2][1]:
     #             break
+
+
+def step_one_v2(data, recorder):
+    
+    if data[0][0] != data[1][1]:
+        while True:
+            push_00(data, recorder)
+            if data[0][0] == data[1][1]:
+                break
+    if data[0][2] != data[1][1]:
+        while True:
+            push_02(data, recorder)
+            if data[0][2] == data[1][1]:
+                break
+    if data[2][0] != data[1][1]:
+        while True:
+            push_20(data, recorder)
+            if data[2][0] == data[1][1]:
+                break
+    if data[2][2] != data[1][1]:
+        while True:
+            push_22(data, recorder)
+            if data[2][2] == data[1][1]:
+                break
+
+
+def step_two_v2(data, recorder):
+
+    if data[0][1] != data[1][1]:
+        while True:
+            push_00(data, recorder)
+            push_02(data, recorder)
+            push_21(data, recorder)
+            if data[0][1] == data[1][1]:
+                break
+    if data[1][0] != data[1][1]:
+        while True:
+            push_00(data, recorder)
+            push_20(data, recorder)
+            push_12(data, recorder)
+            if data[1][0] == data[1][1]:
+                break
+    if data[2][1] != data[1][1]:
+        while True:
+            push_01(data, recorder)
+            push_20(data, recorder)
+            push_22(data, recorder)
+            if data[2][1] == data[1][1]:
+                break
+    if data[1][2] != data[1][1]:
+        while True:
+            push_02(data, recorder)
+            push_10(data, recorder)
+            push_22(data, recorder)
+            if data[1][2] == data[1][1]:
+                break
 
 
 def diff(a, b):
